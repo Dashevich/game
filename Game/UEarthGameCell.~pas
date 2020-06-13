@@ -1,0 +1,109 @@
+unit UEarthGameCell;
+
+interface
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, UGameCell;
+
+Type
+  TEarthGameCell = class(TGameCell)
+  private
+      FBitMap: TBitMap;
+    { Private declarations }
+  protected
+      procedure Paint; override;
+
+  public
+      constructor Create(AOwner: TWinControl); override;
+    { Public declarations }
+  end;
+
+Type
+  TEarth1GameCell = class(TEarthGameCell)
+  private
+    FBitMap: TBitMap;
+    { Private declarations }
+  protected
+      procedure Paint; override;
+  public
+    constructor Create(AOwner: TWinControl); override;
+    { Public declarations }
+  end;
+
+Type
+  TEarth2GameCell = class(TEarth1GameCell)
+  private
+    FBitMap: TBitMap;
+    { Private declarations }
+  protected
+      procedure Paint; override;
+  public
+    constructor Create(AOwner: TWinControl); override;
+    { Public declarations }
+  end;
+
+
+
+const con = 5;
+
+implementation
+
+{ TGameCell }
+
+
+constructor TEarthGameCell.Create(AOwner: TWinControl);
+begin
+  inherited;
+  FBitMap := TBitMap.Create;
+  FBitMap.LoadFromFile('Pictures\Earth1.bmp');
+end;
+
+procedure TEarthGameCell.Paint;
+begin
+  inherited;
+  Canvas.Draw(0,0,FBitMap);
+end;
+
+
+{ TEarth1GameCell }
+
+constructor TEarth1GameCell.Create(AOwner: TWinControl);
+begin
+  inherited;
+  FBitMap := TBitMap.Create;
+  FBitMap.LoadFromFile('Pictures\Earth2.bmp');
+end;
+
+procedure TEarth1GameCell.Paint;
+begin
+  inherited;
+  Canvas.Draw(0,0,FBitMap);
+
+end;
+
+
+{ TEarth2GameCell }
+
+constructor TEarth2GameCell.Create(AOwner: TWinControl);
+begin
+  inherited;
+  FBitMap := TBitMap.Create;
+  FBitMap.LoadFromFile('Pictures\Earth3.bmp');
+end;
+
+procedure TEarth2GameCell.Paint;
+begin
+  inherited;
+  Canvas.Draw(0,0,FBitMap);
+end;
+
+
+INITIALIZATION
+  ClassGC[MaxGC] := TEarthGameCell;
+  inc(MaxGC);
+  ClassGC[MaxGC] := TEarth1GameCell;
+  inc(MaxGC);
+  ClassGC[MaxGC] := TEarth2GameCell;
+  inc(MaxGC);
+end.
+

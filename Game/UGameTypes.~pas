@@ -1,0 +1,19 @@
+unit UGameTypes;
+
+interface
+uses ExtCtrls, Classes, Graphics, Messages, Controls;
+
+protected WM_Person_Died = WM_User+100;
+
+implementation
+
+procedure PersonDied(var M:TMessage);
+begin
+  message WM_Person_Died;
+  MessageBox(0, 'GAME OVER', 'Message', 0)
+  Person.Free;
+  Person := nil;
+end;
+
+end.
+ 

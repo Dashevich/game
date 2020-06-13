@@ -1,0 +1,50 @@
+unit USpaceGameCell;
+
+interface
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, UGameCell;
+
+Type
+  TSpaceGameCell = class(TGameCell)
+    public
+    private
+    protected
+      procedure Paint; override;
+  end;
+
+  TSpace1GameCell = class(TSpaceGameCell)
+    public
+    private
+    protected
+      procedure Paint; override;
+    end;
+implementation
+
+{ TKletka }
+
+procedure TSpaceGameCell.Paint;
+begin
+  inherited;
+  Canvas.Brush.Color := RGB(30, 40, 34);
+  Canvas.Pen.Color := clBlack;
+  Canvas.Pen.Width := 1;
+  Canvas.Rectangle(0, 0, Width, Height);
+end;
+
+procedure TSpace1GameCell.Paint;
+begin
+  inherited;
+  Canvas.Brush.Color := RGB(255, 187, 0);
+  Canvas.Pen.Color := RGB(255, 187, 0);
+  Canvas.Pen.Width := 1;
+  Canvas.Ellipse(Width div 4, Height Div 4, (Width * 3) div 4, (Height * 3) div 4);
+end;
+
+INITIALIZATION
+  ClassGC[MaxGC] := TSpaceGameCell;
+  inc(MaxGC);
+  ClassGC[MaxGC] := TSpace1GameCell;
+  inc(MaxGC);
+
+end.

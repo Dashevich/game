@@ -1,0 +1,84 @@
+unit UPerson;
+
+interface
+uses Forms, ExtCtrls, Windows, Classes, Graphics, Messages, Controls, UGameTypes;
+
+{
+0 - Огонь
+1- Земля
+2 - Вода
+3 - Космос
+4 - Воздух
+5 - Лес
+6 - Озёра (КроК)
+}
+
+TYPE
+  TMagic = (mgFire,mgEarth,mgWater,mgSpace,mgAir,mgWood,mgKrok);
+  TPerson = class(TObject)                      //базовый класс персонажа
+  private
+    function GetMagic(Index: TMagic): integer; virtual;
+    procedure SetMagic(Index: TMagic; const Value: integer); virtual;
+  protected
+    FBitmap : TBitMap;
+    FBitMapFile: string;                        // Поле для хранения ссылки на картинку
+    FMagic : array [TMagic] of integer;           //массив для хранения магии
+    FPerson : TPerson;
+  public
+     
+    Owner : TObject;
+    procedure DrawSelf(Canvas : TCanvas); virtual;       //Отрисуй себя на канве
+    constructor Create; virtual;               //создание персонажа (обязательно виртуальная)
+    property Magic [ Index : TMagic] : integer read GetMagic write SetMagic;
+  end;
+  TClassGamePerson = class of TPerson;   //ссылка НА КЛАСС персонажа  
+
+var
+  ClassGP: array[0..50] of TClassGamePerson;  //Массив ссылок на классы (50 - с запасом)
+  Person : TPerson;                                          //здесь мы будем хранить ссылки на все КЛАССЫ
+                                           //персонажей, которые знает программа
+  MaxGP: integer;                         //указатель заполненности массива
+implementation
+
+{ TPerson }
+
+constructor TPerson.Create;
+   var i: TMagic;
+  begin
+  inherited;
+  for i := mgFire to mgKrok do
+  begin
+    FMagic[i] := 100;
+  end;
+end;
+
+procedure TPerson.DrawSelf(Canvas: TCanvas);
+begin
+  Canvas.Draw(10,10,FBitMap);
+end;
+
+function TPerson.GetMagic(Index: TMagic): integer;
+begin
+  Result := FMagic[Index];
+end;
+
+procedure TPerson.SetMagic(Index: TMagic; const Value: integer);
+var res: word;
+ M: TMessage;
+begin
+  FMagic[Index] := Value;
+  if (Owner <> nil) and (FMagic[Index] <= 10) then
+  begin
+  //ShowMessage(' ');
+    Person.Free;
+    Person := nil;
+    res := MessageBox(Application.Handle, PChar('Вы умерли'), PChar('Игра окончена'), MB_OK + MB_ICONINFORMATION);
+    M.Msg := WM_Person_Died;
+    Owner.Dispatch(res);
+  end;
+end;
+
+end.
+
+
+

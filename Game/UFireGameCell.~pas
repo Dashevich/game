@@ -1,0 +1,87 @@
+unit UFireGameCell;
+
+interface
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, UGameCell, UPerson, UFirePerson;
+
+Type
+  TFireGameCell = class(TGameCell)
+    private
+    protected
+    public
+      FPerson : TPerson;
+      property Person : TPerson read FPerson;
+      constructor Create(AOwner: TWinControl); override;
+      procedure ChangeMagic;
+    end;
+
+  TFire1GameCell = class(TFireGameCell)
+    private
+    protected
+    public
+      constructor Create(AOwner: TWinControl); override;
+    end;
+
+  TFire2GameCell = class(TFire1GameCell)
+    private
+    protected
+    public
+      constructor Create(AOwner: TWinControl); override;
+    end;
+
+implementation
+
+//var
+//P: TPerson;
+
+constructor TFireGameCell.Create(AOwner: TWinControl);
+begin
+  inherited Create(AOwner);
+   FBitMap:= TBitMap.Create;
+   FBitMap.LoadFromFile('Pictures\FewFire.bmp');
+end;
+
+constructor TFire1GameCell.Create(AOwner: TWinControl);
+begin
+  inherited Create(AOwner);
+  FBitMap := TBitmap.Create;
+  FBitMap.LoadFromFile('Pictures\MiddleFire.bmp');
+
+end;
+
+constructor TFire2GameCell.Create(AOwner: TWinControl);
+begin
+  inherited Create(AOwner);
+  FBitMap := TBitmap.Create;
+  FBitMap.LoadFromFile('Pictures\MoreFire.bmp');
+end;
+
+procedure TFireGameCell.ChangeMagic();
+var a: integer;
+begin
+   //FPerson.DrawSelf(Canvas);
+  //FMagic[mgFire] := 10;
+//  if FPerson <> nil then
+   FPerson.FMagic[mgFire] := 10;
+  //P.Magic[mgEarth] := 10;
+ // FPerson.Magic[mgWater] := 10;
+  ///FPerson.Magic[mgSpace] := 10;
+ // FPerson.Magic[mgAir] := 10;
+ // FPerson.Magic[mgWood] := 10;
+ // FPerson.Magic[mgKrok] := 10;
+  //Canvas.Draw(10,10,FBitMap);
+
+end;
+
+
+INITIALIZATION
+  ClassGC[MaxGC] := TFireGameCell;
+  Inc(MaxGC);
+  ClassGC[MaxGC] := TFire1GameCell;
+  Inc(MaxGC);
+  ClassGC[MaxGC] := TFire2GameCell;
+  Inc(MaxGC);
+end.
+
+

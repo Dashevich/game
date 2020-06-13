@@ -1,0 +1,57 @@
+unit UAirGameCell;
+
+interface
+uses Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, UGameCell;
+
+Type
+  TAirGameCell = class(TGameCell)
+  private
+
+  protected
+    procedure Paint; override;
+  public
+    constructor Create(AOwner: TWinControl);
+  end;
+
+  TAir1GameCell = class(TAirGameCell)
+  private
+
+  protected
+    procedure Paint; override;
+  public
+
+  end;
+
+implementation
+
+constructor TAirGameCell.Create(AOwner: TWinControl);
+begin
+  inherited Create(AOwner);
+  Parent := TWinControl(AOwner);
+  Width := 50;
+  Height := 50;
+  Left:= 150;
+  Top := 50;
+  BevelOuter := bvNone;
+  Paint;
+end;
+
+procedure TAirGameCell.Paint;
+begin
+  inherited;
+  Canvas.Brush.Color := clSilver;
+  Canvas.Rectangle(0, 0, Width, Height);
+end;
+
+procedure TAir1GameCell.Paint;
+begin
+  inherited;
+end;
+
+INITIALIZATION
+  ClassGC[MaxGC] := TAirGameCell;
+  Inc(MaxGC);
+  //ClassGC[MaxGC] := TAir1GameCell;
+  //Inc(MaxGC);
+end.
